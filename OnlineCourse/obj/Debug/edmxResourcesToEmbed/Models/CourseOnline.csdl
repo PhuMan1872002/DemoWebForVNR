@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VNR_InternShipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="KhoaHoc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenKhoaHoc" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MonHocs" Relationship="Self.FK_dbo_BaiHat_dbo_TheLoai_TheLoaiID" FromRole="KhoaHoc" ToRole="MonHoc" />
+  </EntityType>
+  <EntityType Name="MonHoc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenMonHoc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MoTa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="KhoaHocID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="KhoaHoc" Relationship="Self.FK_dbo_BaiHat_dbo_TheLoai_TheLoaiID" FromRole="MonHoc" ToRole="KhoaHoc" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_dbo_BaiHat_dbo_TheLoai_TheLoaiID">
+    <End Role="KhoaHoc" Type="Self.KhoaHoc" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MonHoc" Type="Self.MonHoc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhoaHoc">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MonHoc">
+        <PropertyRef Name="KhoaHocID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VNR_InternShipEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="KhoaHocs" EntityType="Self.KhoaHoc" />
+    <EntitySet Name="MonHocs" EntityType="Self.MonHoc" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_dbo_BaiHat_dbo_TheLoai_TheLoaiID" Association="Self.FK_dbo_BaiHat_dbo_TheLoai_TheLoaiID">
+      <End Role="KhoaHoc" EntitySet="KhoaHocs" />
+      <End Role="MonHoc" EntitySet="MonHocs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

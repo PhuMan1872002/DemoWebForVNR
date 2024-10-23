@@ -1,0 +1,81 @@
+﻿/* Resetting some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Sidebar - Danh sách khóa học */
+.sidebar {
+    width: 25%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-left: 1px solid #ccc; /* Change from right to left */
+    order: 2; /* Move the sidebar to the right */
+}
+
+.sidebar h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    display: block;
+    padding: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #d4d4d4;
+}
+
+/* Content - Danh sách môn học */
+.content {
+    flex: 1;
+    padding: 20px;
+    order: 1; /* Ensure content is on the left */
+}
+
+.content h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+#subject-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#subject-list li {
+    font-size: 18px;
+    padding: 10px;
+    background-color: #e0e0e0;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}

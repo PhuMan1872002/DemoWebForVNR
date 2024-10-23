@@ -1,0 +1,82 @@
+﻿@model List<OnlineCourse.Models.MonHoc>
+@{
+    OnlineCourse.Models.VNR_InternShipEntities db = new OnlineCourse.Models.VNR_InternShipEntities();
+    var khoaHoc = db.KhoaHocs.ToList(); <!-- Lấy danh sách khóa học từ ViewBag -->
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách khóa học</title>
+    <!-- Thêm link đến file CSS -->
+    <link rel="stylesheet" href="~/Content/styles.css">
+    <!-- Thêm jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/Content/CourseScript.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Phần sidebar chứa danh sách các khóa học -->
+        <div class="sidebar">
+            <h3>Khóa học</h3>
+            <ul id="khoa-hoc-list">
+                @foreach (var kh in khoaHoc)
+                 {
+                    <li>
+                        <a href="javascript:void(0)" class="khoa-hoc-link" data-id="@kh.ID">
+                            @kh.TenKhoaHoc
+                        </a>
+                    </li>
+                 }
+            </ul>
+        </div>
+
+        <!-- Phần content chứa danh sách môn học -->
+        <div class="content">
+            <h2>Các môn học</h2>
+            <ul id="subject-list">
+                @foreach (var kh in Model)
+                {
+                    <li>
+                       @kh.TenMonHoc
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- jQuery AJAX Script -->
+    <script>
+        $(document).ready(function() {
+            // Lắng nghe sự kiện click vào khóa học
+            $('.khoa-hoc-link').on('click', function(e) {
+                e.preventDefault();
+
+                var khoaHocId = $(this).data('id'); // Lấy ID của khóa học
+
+                // Gửi yêu cầu AJAX đến server
+                $.ajax({
+                    url: '@Url.Action("GetMonHocByKhoaHocId", "Home")',
+                    type: 'GET',
+                    data: { khoaHocId: khoaHocId }, // Dữ liệu gửi đi
+                    success: function (response) {
+                        $('#subject-list').empty(); // Xóa danh sách cũ nếu cần
+                        $.each(response, function (index, monHoc) {
+                            $('#subject-list').append('<li>' + monHoc + '</li>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText); // In lỗi ra console để debug
+                        alert('Có lỗi xảy ra: ' + error);
+                    }
+                });
+            });
+        });
+
+
+    </script>
+</body>
+</html>
