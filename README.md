@@ -1,8 +1,7 @@
 # DemoWebForVNR
 
 ## Project Overview
-DemoWebForVNR is a web-based project designed to demonstrate the functionality of an online course platform. It includes user management, course browsing, and enrollment features, along with a basic administrative panel for managing course content.
-
+DemoWebForVNR is a web-based project designed to demonstrate the functionality of an online course platform. 
 ## Features
 - User registration and authentication
 - Course browsing and enrollment
